@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Contact Us</h2>
+        <form id="contactForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Your Full Name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Your Email Address" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" placeholder="Your Message" rows="4" required></textarea>
+
+            <label for="inquiry">Inquiry Type:</label>
+            <select id="inquiry" name="inquiry">
+                <option value="general">General Inquiry</option>
+                <option value="technical">Technical Support</option>
+                <option value="billing">Billing/Account</option>
+                <option value="other">Other</option>
+            </select>
+
+            <!-- Checkbox and Label in the Same Line -->
+            <div class="checkbox-group">
+                <input type="checkbox" id="agreement" name="agreement" required>
+                <label for="agreement">I agree to the <a href="#" target="_blank">Privacy Policy</a></label>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+        <div id="messageBox" class="message"></div>
+    </div>
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let message = document.getElementById("message").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let messageBox = document.getElementById("messageBox");
+
+            if (name === "" || email === "" || message === "") {
+                messageBox.textContent = "❌ Please fill in all required fields.";
+                messageBox.className = "message error";
+                messageBox.style.display = "block";
+            } else if (phone !== "" && !/^\d{3}-\d{3}-\d{4}$/.test(phone)) {
+                messageBox.textContent = "❌ Please enter a valid phone number (123-456-7890).";
+                messageBox.className = "message error";
+                messageBox.style.display = "block";
+            } else {
+                messageBox.textContent = "✅ Your message has been sent successfully!";
+                messageBox.className = "message success";
+                messageBox.style.display = "block";
+                document.getElementById("contactForm").reset();
+            }
+        });
+    </script>
+
+</body>
+</html>
